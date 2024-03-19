@@ -23,4 +23,7 @@ If it says
 > Error: 'url.lock' file not found.
 Than you haven't unzip the url.zip file yet. Just Unzip it and place where the executable and codes are located.
 # Developer
-If you are trying to understand the url.lock the file, it is just a .txt file just renamed as .lock so that normal users does not understand.)
+If you are trying to understand the url.lock the file, it is just a .txt file just renamed as .lock so that no conflict between files.
+
+# Star
+Put srat or not update for 100 years.
