@@ -1,6 +1,7 @@
 # FTP-Downloader-BDIX
 This is a python program to help user download movies and diffarent files.
-Before trying make sure this http://103.170.204.250/ website supports for you
+Before trying this program make sure this http://103.170.204.250/ website works for you.
+You can also check http://172.16.50.4/ although it isn't done scraping yet. But you can scrape yourself with `main.py`
 # Install 
 Unzip the 
 
@@ -26,4 +27,4 @@ Than you haven't unzip the url.zip file yet. Just Unzip it and place where the e
 If you are trying to understand the url.lock the file, it is just a .txt file just renamed as .lock so that no conflict between files.
 
 # Star
-Put srat or not update for 100 years.
+Put srat or no update for 100 years.
