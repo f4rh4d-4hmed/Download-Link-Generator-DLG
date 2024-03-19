@@ -13,7 +13,7 @@ Its must. Otherwise the tool will not work. Unzip it in the containing directory
 `cd FTP-Downloader-BDIX`
 `pip install -r requirements.txt`
 `python3 main.py`
-Wait for the worker to finish. 
+Wait for the worker to finish. After that A url.txt file will be created. Change it to url.lock.
 Than `python3 search.py`
 # Usage
 Go as it says, provide all the information it asks after the application is running.
