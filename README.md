@@ -13,6 +13,11 @@ cd DLG
 ```bash
 pip3 install -r requirements.txt
 ```
+- Make sure to unzip the url.zip file
+```bash
+unzip url.zip
+You can also use 7zip or any other unzipper!
+```
 ```bash
 python3 main.py
 ```
