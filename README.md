@@ -26,7 +26,7 @@ python3 main.py
 python3 main_win.py
 ```
 ### Manual Usage
-- ***main.py*** or ***main_win.py*** will lead you to other pages. But you can ran them menually.
+- ***main.py*** or ***main_win.py*** will lead you to other program and window. But you can ran them menually.
 - For BDIX Video Search
 ```bash
 python3 video_search.py
