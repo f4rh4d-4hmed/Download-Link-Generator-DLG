@@ -1,71 +1,89 @@
-from colorama import init, Fore, Style
-import requests
-from bs4 import BeautifulSoup
-from urllib.parse import urljoin
+import sys
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QSystemTrayIcon, QDialog
+from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import Qt
+import subprocess
 
-# Initialize Colorama
-init(autoreset=True)
+class MainWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Window Manager")
+        self.setWindowIcon(QIcon("icon.ico"))  # Change "icon.png" to your icon file
+        self.setStyleSheet("background-color: rgb(50, 50, 50); color: white;")
 
-# Author signature
-author_signature = Fore.YELLOW + Style.BRIGHT + """
-
-▒█▀▀▀ ▀▀█▀▀ ▒█▀▀█ ░░ ▒█▀▀▄ ▒█▀▀▀█ ▒█░░▒█ ▒█▄░▒█ ▒█░░░ ▒█▀▀▀█ ░█▀▀█ ▒█▀▀▄ ▒█▀▀▀ ▒█▀▀█ 
-▒█▀▀▀ ░▒█░░ ▒█▄▄█ ▀▀ ▒█░▒█ ▒█░░▒█ ▒█▒█▒█ ▒█▒█▒█ ▒█░░░ ▒█░░▒█ ▒█▄▄█ ▒█░▒█ ▒█▀▀▀ ▒█▄▄▀ 
-▒█░░░ ░▒█░░ ▒█░░░ ░░ ▒█▄▄▀ ▒█▄▄▄█ ▒█▄▀▄█ ▒█░░▀█ ▒█▄▄█ ▒█▄▄▄█ ▒█░▒█ ▒█▄▄▀ ▒█▄▄▄ ▒█░▒█
-"""
-print(author_signature)
-
-# Created By
-print(Fore.CYAN + Style.BRIGHT + "Created By: Farhad Ahmed")
-
-# Version
-print(Fore.GREEN + Style.BRIGHT + "Version: 0.0.1")
-
-# Set to keep track of visited URLs
-visited_urls = set()
-
-# Base URL of the website
-base_url = 'http://103.170.204.250/FILE/'
-
-# Function to scan a URL
-def scan_url(url):
-    # Check if URL has already been visited
-    if url in visited_urls:
-        return
-    
-    # Add URL to visited set
-    visited_urls.add(url)
-    
-    # Fetch HTML content
-    response = requests.get(url)
-    
-    # Check if request was successful
-    if response.status_code == 200:
-        # Parse HTML
-        soup = BeautifulSoup(response.content, 'html.parser')
+        layout = QVBoxLayout()
         
-        # Search for specified file formats
-        file_formats = ['.mp4', '.mkv', '.mp3', '.rar', '.zip', '.pkg', '.dod']
-        for link in soup.find_all('a'):
-            href = link.get('href')
-            full_url = urljoin(url, href)  # Construct full URL
-            
-            if any(format in href for format in file_formats):
-                # Save full URL to found.html
-                with open('urls.txt', 'a') as file:
-                    file.write(f"{full_url}\n")
-            else:
-                # Recursively explore directory links
-                if href.endswith('/'):
-                    scan_url(full_url)
-    
-    else:
-        print(Fore.RED + f"Failed to fetch URL: {url}")
+        self.title_label = QLabel("What do you want to download?")
+        self.title_label.setStyleSheet("font-size: 20px;")
+        layout.addWidget(self.title_label, alignment=Qt.AlignHCenter)
+        
+        options_layout = QHBoxLayout()
+        
+        self.video_button = QPushButton("Video-Movie, Animation, Others")
+        self.video_button.setStyleSheet("background-color: rgb(70, 70, 70); color: white;")
+        self.video_button.clicked.connect(self.open_video_search)
+        options_layout.addWidget(self.video_button)
+        
+        self.torrent_button = QPushButton("Torrent-Videos and Games")
+        self.torrent_button.setStyleSheet("background-color: rgb(70, 70, 70); color: white;")
+        self.torrent_button.clicked.connect(self.prompt_torrent_options)
+        options_layout.addWidget(self.torrent_button)
+        
+        layout.addLayout(options_layout)
+        self.setLayout(layout)
+        
+        self.tray_icon = QSystemTrayIcon(QIcon("icon.png"), self)
+        self.tray_icon.activated.connect(self.on_tray_icon_activated)
+        self.tray_icon.show()
 
-# Start scanning from the top URL
-scan_url(base_url)
+    def open_video_search(self):
+        subprocess.Popen(["python", "video_search.py"])
 
-# Check if the entire website is scanned by comparing the number of visited URLs
-# If the top URL is visited twice, stop the scanning process
-if len(visited_urls) > 1:
-    print(Fore.GREEN + "Scanning complete.")
+    def prompt_torrent_options(self):
+        self.hide()
+        torrent_options_dialog = TorrentOptionsDialog()
+        torrent_options_dialog.exec_()
+        self.show()
+
+    def on_tray_icon_activated(self, reason):
+        if reason == QSystemTrayIcon.DoubleClick:
+            self.show()
+
+class TorrentOptionsDialog(QDialog):  # Change here
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Torrent Options")
+        self.setStyleSheet("background-color: rgb(50, 50, 50); color: white;")
+        
+        layout = QVBoxLayout()
+        
+        self.title_label = QLabel("Where do you want to download Games from?")
+        self.title_label.setStyleSheet("font-size: 20px;")
+        layout.addWidget(self.title_label, alignment=Qt.AlignHCenter)
+        
+        options_layout = QHBoxLayout()
+        
+        self.kat_button = QPushButton("KAT-Videos and Games Both")
+        self.kat_button.setStyleSheet("background-color: rgb(70, 70, 70); color: white;")
+        self.kat_button.clicked.connect(self.execute_kat)
+        options_layout.addWidget(self.kat_button)
+        
+        self.fitgirl_button = QPushButton("Fitgirl-Repack: Games Only")
+        self.fitgirl_button.setStyleSheet("background-color: rgb(70, 70, 70); color: white;")
+        self.fitgirl_button.clicked.connect(self.execute_fitgirl)
+        options_layout.addWidget(self.fitgirl_button)
+        
+        layout.addLayout(options_layout)
+        self.setLayout(layout)
+        
+    def execute_kat(self):
+        subprocess.Popen(["python", "kat.py"])
+
+    def execute_fitgirl(self):
+        subprocess.Popen(["python", "fitgirl_repack.py"])
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec_())
