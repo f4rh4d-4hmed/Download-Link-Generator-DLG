@@ -1,5 +1,7 @@
 # DLG - Download Links Generator
 This simple python program is here to help get most of the file download link available for people to download. It can provide download link of Movies, Games, Videos, Animation, Softwers, Operating System and many more.
+- ![image](https://github.com/f4rh4d-4hmed/Download-Link-Generator-DLG/assets/161406872/238ec74a-4be2-4b3d-8ea1-07ee93f7ac5d)
+
 ## Installation
 The installation process for release is easy. Install like any other program. The windows release can be found here
 [Download](https://github.com/f4rh4d-4hmed/Download-Link-Generator-DLG/releases/tag/Release-Version2.O)
