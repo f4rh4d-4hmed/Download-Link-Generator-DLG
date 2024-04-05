@@ -1,30 +1,46 @@
-# FTP-Downloader-BDIX
-This is a python program to help user download movies and diffarent files.
-Before trying this program make sure this http://103.170.204.250/ website works for you.
-You can also check http://172.16.50.4/ although it isn't done scraping yet. But you can scrape yourself with `main.py`
-# Install 
-Unzip the 
-
-> url.zip
-
-Its must. Otherwise the tool will not work. Unzip it in the containing directory with other files that was provided.
-
-###  Python
-`git clone https://github.com/f4rh4d-4hmed/FTP-Downloader-BDIX.git`
-`cd FTP-Downloader-BDIX`
-`pip install -r requirements.txt`
-`python3 main.py`
-Wait for the worker to finish. After that A url.txt file will be created. Change it to url.lock.
-Than `python3 search.py`
-# Usage
-Go as it says, provide all the information it asks after the application is running.
-# Issue
-If it says 
-
-> Error: 'url.lock' file not found.
-Than you haven't unzip the url.zip file yet. Just Unzip it and place where the executable and codes are located.
-# Developer
-If you are trying to understand the url.lock the file, it is just a .txt file just renamed as .lock so that no conflict between files.
-
-# Star
-Put srat or no update for 100 years.
+# DLG - Download Links Generator
+This simple python program is here to help get most of the file download link available for people to download. It can provide download link of Movies, Games, Videos, Animation, Softwers, Operating System and many more.
+## Installation
+The installation process for release is easy. Install like any other program. The windows release can be found here
+[Download](https://github.com/f4rh4d-4hmed/Download-Link-Generator-DLG/releases/tag/Release-Version2.O)
+- For Source users you can follow this 
+```bash
+git clone https://github.com/f4rh4d-4hmed/Download-Link-Generator-DLG.git DLG
+```
+```bash
+cd DLG
+```
+```bash
+pip3 install -r requirements.txt
+```
+```bash
+python3 main.py
+```
+- You can also use this if you are windows user (Not Recomanded)
+```bash
+python3 main_win.py
+```
+### Manual Usage
+- ***main.py*** or ***main_win.py*** will lead you to other pages. But you can ran them menually.
+- For BDIX Video Search
+```bash
+python3 video_search.py
+```
+- For KAT
+```bash
+python3 kat.py
+```
+- For Fitgirl Repack
+```bash
+python3 fitgirl_repack.py
+```
+#### Contribute
+Contribute to this code for bug fixes, GUI, Feature.
+- First fork this code.
+- Now goto https://github.com/[Your-Github-Username-here]/Download-Link-Generator-DLG
+- Than from file list click on upload file.
+- Upload your changes or edit existing file.
+- Ask me to update by pull request.
+- Done 🎁
+##### Star 🌟
+Give star for new update. No star no new update for thousend years.
