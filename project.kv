@@ -1,0 +1,53 @@
+<TorrentSearchWindow>:
+    orientation: 'vertical'
+    padding: [10, 10]
+    spacing: 10
+
+    Label:
+        text: "Search your video name here:"
+        color: 1, 1, 1, 1
+        font_size: 16
+        size_hint: 1, None
+        height: 40
+
+    TextInput:
+        id: search_input
+        hint_text: "Enter your search query"
+        multiline: False
+        size_hint: 1, None
+        height: 40
+
+    Button:
+        text: "Search"
+        size_hint: 1, None
+        height: 40
+        on_press: root.search()
+
+    ScrollView:
+        size_hint_y: None
+        height: root.height * 0.5
+        GridLayout:
+            id: scroll_layout
+            cols: 1
+            size_hint_y: None
+            height: self.minimum_height
+
+    Button:
+        text: "Load More"
+        size_hint: 1, None
+        height: 40
+        opacity: 0
+        on_press: root.load_more_results()
+
+<LabelWithValue@Label>:
+    size_hint: 0.7, None
+    height: 30
+
+<ResultBoxLayout@BoxLayout>:
+    orientation: 'horizontal'
+    size_hint_y: None
+    height: 60
+
+<VideoSearchApp>:
+    icon: 'assets/icon.png'
+    TorrentSearchWindow:
