@@ -34,7 +34,6 @@ jobs:
           curl -LO https://github.com/f4rh4d-4hmed/Download-Link-Generator-DLG/raw/android-demo/url.zip
           unzip url.zip -d assets
 
-
       - name: Install Buildozer
         run: |
           pip install buildozer
