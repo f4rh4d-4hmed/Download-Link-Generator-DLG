@@ -1,9 +1,9 @@
-name: Build Kivy App
+name: Build Android App
 
 on:
   push:
     branches:
-      - android-demo
+      - android-demo  # Adjust the branch name as needed
 
 jobs:
   build:
@@ -16,25 +16,24 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8
+          python-version: 3.12  # Adjust Python version as needed
 
-      - name: Install Cython
-        run: |
-          pip install Cython
+      - name: Install JDK
+        run: sudo apt update && sudo apt install -y default-jdk
 
-      - name: Install OpenJDK
+      - name: Install dependencies
         run: |
-          sudo apt-get update
-          sudo apt install default-jdk
+          python -m pip install --upgrade pip
+          pip install buildozer
 
-      - name: Install Kivy
-        run: |
-          pip install kivy
+      - name: Build Android APK
+        run: buildozer -v android debug -y
 
-      - name: Download and extract file
+      - name: Download and Unzip Files
         run: |
-          wget -O /tmp/url.zip https://github.com/f4rh4d-4hmed/Download-Link-Generator-DLG/raw/android-demo/url.zip
-          unzip /tmp/url.zip -d assets
+          curl -LO https://github.com/f4rh4d-4hmed/Download-Link-Generator-DLG/raw/android-demo/url.zip
+          unzip url.zip -d assets
+
 
       - name: Install Buildozer
         run: |
