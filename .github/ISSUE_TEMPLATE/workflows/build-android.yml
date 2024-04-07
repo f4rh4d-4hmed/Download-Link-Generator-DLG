@@ -1,0 +1,45 @@
+name: Build Kivy App
+
+on:
+  push:
+    branches:
+      - android-demo
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install Cython
+        run: |
+          pip install Cython
+
+      - name: Install OpenJDK
+        run: |
+          sudo apt-get update
+          sudo apt install default-jdk
+
+      - name: Install Kivy
+        run: |
+          pip install kivy
+
+      - name: Download and extract file
+        run: |
+          wget -O /tmp/url.zip https://github.com/f4rh4d-4hmed/Download-Link-Generator-DLG/raw/android-demo/url.zip
+          unzip /tmp/url.zip -d assets
+
+      - name: Install Buildozer
+        run: |
+          pip install buildozer
+
+      - name: Build Kivy App
+        run: |
+          buildozer -v android debug
