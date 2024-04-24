@@ -1,0 +1,66 @@
+import requests
+from bs4 import BeautifulSoup
+from urllib.parse import urljoin
+import re
+import traceback
+from datetime import datetime
+
+# Define file extensions regex pattern
+file_extensions_pattern = re.compile(r'\.(mp4|mkv|mp3|rar|zip|pkg|dod|exe|iso|jar|pdf|bat|torrent)$', re.IGNORECASE)
+
+visited_urls = set()
+
+def scan_url(url):
+    consecutive_crashes = 0  # Keep track of consecutive crashes
+    try:
+        if url in visited_urls:
+            return
+
+        visited_urls.add(url)
+
+        response = requests.get(url)
+
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.content, 'html.parser')
+            for link in soup.find_all('a'):
+                href = link.get('href')
+                full_url = urljoin(url, href)
+                if re.search(file_extensions_pattern, href):
+                    with open('urls.txt', 'a') as file:
+                        file.write(f"{full_url}\n")
+                else:
+                    if href.endswith('/'):
+                        scan_url(full_url)
+        else:
+            print(f"Failed to fetch URL: {url}")
+
+    except Exception as e:
+        consecutive_crashes += 1
+        if consecutive_crashes >= 5:
+            print("Five consecutive crashes occurred. Exiting...")
+            exit()
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        crash_report_filename = f"crash_report_{timestamp}.txt"
+        with open(crash_report_filename, 'w') as file:
+            file.write(f"Crash report generated at: {timestamp}\n")
+            file.write(f"URL causing crash: {url}\n\n")
+            file.write("Traceback:\n")
+            traceback.print_exc(file=file)
+        print(f"An error occurred while scanning URL: {url}. Crash report generated: {crash_report_filename}")
+
+def main():
+    base_url = input("Enter the base URL of the website to scan: ")
+
+    start_time = datetime.now()
+    print(f"Scanning started at: {start_time}")
+
+    scan_url(base_url)
+
+    end_time = datetime.now()
+    print(f"Scanning completed at: {end_time}")
+
+    if len(visited_urls) > 1:
+        print("Scanning complete.")
+
+if __name__ == "__main__":
+    main()
